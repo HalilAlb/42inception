@@ -3,7 +3,7 @@
 # thin wrapper that adds host-side prerequisites (data dirs) and convenience
 # targets. Targets are .PHONY because they don't produce files at these names.
 
-LOGIN         := halilalbayrak
+LOGIN         := malbayra
 DATA_DIR      := /home/$(LOGIN)/data
 WP_VOLUME     := $(DATA_DIR)/wordpress
 DB_VOLUME     := $(DATA_DIR)/mariadb
