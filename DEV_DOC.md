@@ -17,7 +17,7 @@ Install:
 - `make`, `git`, `openssl` (for sanity-checking the TLS cert from the
   host)
 - `sudo` rights, once, to edit `/etc/hosts`, and for `make clean`
-  (container-owned files under `/home/halilalbayrak/data`)
+  (container-owned files under `/home/malbayra/data`)
 
 Verify:
 
@@ -32,8 +32,8 @@ docker compose version     # Docker Compose version v2.20.x or newer
 git clone <repo-url> 42inception
 cd 42inception
 
-# 1. Tell the host where halilalbayrak.42.fr resolves.
-echo "127.0.0.1 halilalbayrak.42.fr" | sudo tee -a /etc/hosts
+# 1. Tell the host where malbayra.42.fr resolves.
+echo "127.0.0.1 malbayra.42.fr" | sudo tee -a /etc/hosts
 
 # 2. Create the secrets. Each file holds a single password; trailing
 #    newlines are stripped by the entrypoints. Pick your own values.
@@ -46,16 +46,16 @@ chmod 600 secrets/*.txt
 
 # 3. Create srcs/.env (gitignored). Minimal content:
 cat > srcs/.env <<'ENV'
-DOMAIN_NAME=halilalbayrak.42.fr
-CERT_CN=halilalbayrak.42.fr
+DOMAIN_NAME=malbayra.42.fr
+CERT_CN=malbayra.42.fr
 MYSQL_DATABASE=wordpress
 MYSQL_USER=wp_user
-WP_URL=https://halilalbayrak.42.fr
+WP_URL=https://malbayra.42.fr
 WP_TITLE=Inception
 WP_ADMIN_USER=halil_root
-WP_ADMIN_EMAIL=halil_root@halilalbayrak.42.fr
+WP_ADMIN_EMAIL=halil_root@malbayra.42.fr
 WP_USER=visitor
-WP_USER_EMAIL=visitor@halilalbayrak.42.fr
+WP_USER_EMAIL=visitor@malbayra.42.fr
 WP_LOCALE=en_US
 ENV
 #    The admin username MUST NOT contain "admin" or "administrator" in
@@ -68,8 +68,8 @@ make
 `make prep` (called automatically by `make`) creates the two host
 data directories:
 
-- `/home/halilalbayrak/data/wordpress` — WP files volume
-- `/home/halilalbayrak/data/mariadb` — DB datadir
+- `/home/malbayra/data/wordpress` — WP files volume
+- `/home/malbayra/data/mariadb` — DB datadir
 
 These paths are the literal `device:` for the `local` driver in
 `docker-compose.yml`. Compose will not `mkdir` them for you; if they
@@ -129,15 +129,15 @@ Each container exposes only what it has to:
 ## Where the data lives
 
 Two volumes, both backed by host directories under
-`/home/halilalbayrak/data/`. This is the trick the subject is asking
+`/home/malbayra/data/`. This is the trick the subject is asking
 for: declared as docker named volumes (so `docker volume ls` sees
 them and `docker compose down -v` removes them) but physically rooted
 on the host via the `local` driver's `o: bind`.
 
 | volume     | host path                            | container path   | written by                  |
 | ---------- | ------------------------------------ | ---------------- | --------------------------- |
-| `db_data`  | `/home/halilalbayrak/data/mariadb`   | `/var/lib/mysql` | mariadb                     |
-| `wp_files` | `/home/halilalbayrak/data/wordpress` | `/var/www/html`  | wordpress (rw), nginx (ro)  |
+| `db_data`  | `/home/malbayra/data/mariadb`   | `/var/lib/mysql` | mariadb                     |
+| `wp_files` | `/home/malbayra/data/wordpress` | `/var/www/html`  | wordpress (rw), nginx (ro)  |
 
 What survives what:
 
@@ -169,7 +169,7 @@ What survives what:
 
 ## Troubleshooting
 
-- **`mount: /home/halilalbayrak/data/...: no such file or directory`** —
+- **`mount: /home/malbayra/data/...: no such file or directory`** —
   you ran `up` directly instead of `make`. Either run `make prep` or
   just `make`.
 - **WordPress container stuck in a restart loop, logs say "FATAL:
@@ -181,7 +181,7 @@ What survives what:
   `make clean && make`.
 - **Browser shows "ERR_SSL_PROTOCOL_ERROR"** — usually a stale browser
   TLS cache for the self-signed cert. Hard-reload or test with
-  `curl -kI https://halilalbayrak.42.fr/`.
+  `curl -kI https://malbayra.42.fr/`.
 - **`docker compose` warns about `pull_policy` being unknown** —
   your compose plugin is older than v2.20. Upgrade it.
 

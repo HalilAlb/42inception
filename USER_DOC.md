@@ -10,7 +10,7 @@ After `make`, three containers are running on the host.
 
 | service     | role                               | reachable from host                      |
 | ----------- | ---------------------------------- | ---------------------------------------- |
-| `nginx`     | TLS-terminating reverse proxy      | `https://halilalbayrak.42.fr` (port 443) |
+| `nginx`     | TLS-terminating reverse proxy      | `https://malbayra.42.fr` (port 443) |
 | `wordpress` | php-fpm worker, the WordPress site | only via nginx                           |
 | `mariadb`   | database for WordPress             | only from other containers               |
 
@@ -40,17 +40,17 @@ a no-op. If you change a Dockerfile, `make re` rebuilds from scratch.
 
 ## Reaching the site and the admin panel
 
-The hostname `halilalbayrak.42.fr` has to resolve to the host running
+The hostname `malbayra.42.fr` has to resolve to the host running
 the stack. On the same machine as the containers, the one-time setup is:
 
 ```sh
-echo "127.0.0.1 halilalbayrak.42.fr" | sudo tee -a /etc/hosts
+echo "127.0.0.1 malbayra.42.fr" | sudo tee -a /etc/hosts
 ```
 
 Once that's in place:
 
-- **WordPress site** — <https://halilalbayrak.42.fr/>
-- **WordPress admin panel** — <https://halilalbayrak.42.fr/wp-admin/>
+- **WordPress site** — <https://malbayra.42.fr/>
+- **WordPress admin panel** — <https://malbayra.42.fr/wp-admin/>
   Log in with the administrator account (see below).
 
 The TLS cert is self-signed; the browser will ask you to confirm the
@@ -93,7 +93,7 @@ make logs        # follow all logs; ctrl+C to stop
 Quick TLS sanity check:
 
 ```sh
-curl -kI https://halilalbayrak.42.fr/
+curl -kI https://malbayra.42.fr/
 # expect: HTTP/2 200 (or 301/302 if WordPress redirects)
 ```
 
@@ -101,7 +101,7 @@ Quick "TLS 1.1 must be refused" check (the subject explicitly forbids
 older protocols):
 
 ```sh
-openssl s_client -connect halilalbayrak.42.fr:443 -tls1_1 </dev/null
+openssl s_client -connect malbayra.42.fr:443 -tls1_1 </dev/null
 # expect: handshake failure / no protocols available
 ```
 
@@ -116,7 +116,7 @@ docker exec -it mariadb mariadb -u root -p"$(cat secrets/db_root_password.txt)" 
 If any container is in a restart loop, `docker logs <name>` is the
 quickest way to see why. Common first-time culprits are:
 
-- `/home/halilalbayrak/data/{wordpress,mariadb}` doesn't exist —
+- `/home/malbayra/data/{wordpress,mariadb}` doesn't exist —
   `make prep` (or `make`) creates them.
 - `/etc/hosts` not updated — the site loads but the browser shows the
   wrong cert, or WordPress redirects to a hostname that doesn't resolve.

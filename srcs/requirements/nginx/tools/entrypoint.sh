@@ -1,7 +1,4 @@
 #!/bin/bash
-# Generate a self-signed cert on first boot if one isn't there yet, then
-# `exec nginx`. Cert generation is at runtime (not build time) so the key
-# material never ends up in the image layer cache.
 set -euo pipefail
 
 SSL_DIR=/etc/nginx/ssl
@@ -22,7 +19,6 @@ if [[ ! -s "$CERT" || ! -s "$KEY" ]]; then
     chmod 600 "$KEY"
 fi
 
-# Fail loudly on a broken config before handing off to nginx as PID 1.
 nginx -t
 
 exec "$@"

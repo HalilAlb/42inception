@@ -1,0 +1,11 @@
+srcs/.env
+secrets/*
+!secrets/.gitkeep
+
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+data/

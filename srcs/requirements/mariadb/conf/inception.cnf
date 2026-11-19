@@ -1,12 +1,4 @@
-# Override block loaded last (99-) so it wins over Debian's 50-server.cnf.
-# Only the settings that matter for the Inception stack are pinned here;
-# everything else inherits package defaults.
-
 [mysqld]
-# Listen on every interface inside the docker network. The container is
-# only reachable through the `inception` user-defined network — never
-# from the host — so this is not the same risk as bind-address=0.0.0.0
-# on a public host.
 bind-address           = 0.0.0.0
 port                   = 3306
 skip-name-resolve
@@ -15,10 +7,8 @@ datadir                = /var/lib/mysql
 socket                 = /var/run/mysqld/mysqld.sock
 pid-file               = /var/run/mysqld/mysqld.pid
 
-# Send the error log to stderr so `docker logs mariadb` shows it.
 log-error              = /dev/stderr
 
-# WordPress wants utf8mb4 for full emoji + non-Latin support.
 character-set-server   = utf8mb4
 collation-server       = utf8mb4_unicode_ci
 
