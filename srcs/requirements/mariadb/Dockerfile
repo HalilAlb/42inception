@@ -23,7 +23,7 @@ EXPOSE 3306
 VOLUME ["/var/lib/mysql"]
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=20s --retries=5 \
-    CMD bash -c ':> /dev/tcp/localhost/3306' || exit 1
+    CMD bash -c ':> /dev/tcp/127.0.0.1/3306' || exit 1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["mariadbd", "--user=mysql"]

@@ -18,7 +18,7 @@ services:
     networks:
       - inception
     healthcheck:
-      test: ["CMD", "bash", "-c", ":> /dev/tcp/localhost/3306"]
+      test: ["CMD", "bash", "-c", ":> /dev/tcp/127.0.0.1/3306"]
       interval: 10s
       timeout: 5s
       retries: 5
