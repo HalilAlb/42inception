@@ -212,18 +212,18 @@ References I actually leaned on, in roughly decreasing order of usefulness:
 
 ### Use of AI
 
-I used Claude as a pair-programmer for two things specifically:
+I used an AI assistant (Claude) as a learning and review tool, not to
+generate the project:
 
-1. Drafting the MariaDB bootstrap SQL and the WordPress entrypoint
-   skeleton. The structure and order of operations (init datadir →
-   temp `--skip-networking` instance → grant queries → clean shutdown;
-   copy release → `wp config create` → `wp core install` → second
-   user) came from a conversation; I checked each step against the
-   MariaDB / wp-cli docs and the official image's reference entrypoint
-   before keeping it.
-2. Writing the per-comparison paragraphs above (VM vs Docker, etc.).
-   I wrote the structure and the framing, asked for a second pass on
-   wording, and edited the result down.
-
-The Dockerfiles, the nginx vhost and the compose file were written and
-debugged by hand so I can defend them line by line.
+1. **Understanding concepts.** Asking for explanations of Docker vs
+   Docker Compose, `ENTRYPOINT` vs `CMD`, PID 1 and `exec`, named
+   volumes vs bind mounts, and how php-fpm talks to nginx over
+   FastCGI. I then checked these against the official Docker, MariaDB,
+   nginx and wp-cli documentation.
+2. **Debugging.** When the MariaDB container would not start, I used it
+   to help read the logs and find the causes (the host data directory
+   being owned by root, and a log setting that failed inside the
+   container), then tested the fix on the VM.
+3. **Reviewing and wording.** Checking the configuration against the
+   subject and the evaluation sheet, and proofreading the documentation
+   (README, USER_DOC, DEV_DOC).
