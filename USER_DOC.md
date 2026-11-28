@@ -75,7 +75,7 @@ Two places, and they have to agree.
 | -------------------------- | ------------------------------- |
 | MariaDB root               | `secrets/db_root_password.txt`  |
 | MariaDB `wp_user`          | `secrets/db_password.txt`       |
-| WP admin (`halil_root`)    | `secrets/wp_admin_password.txt` |
+| WP admin (`malbayra`)    | `secrets/wp_admin_password.txt` |
 | WP second user (`visitor`) | `secrets/wp_user_password.txt`  |
 
 Non-secret config (domain, usernames, DB name, site title) is in
@@ -110,7 +110,7 @@ Database reachable and populated:
 ```sh
 docker exec -it mariadb mariadb -u root -p"$(cat secrets/db_root_password.txt)" \
     -e "SELECT user_login FROM wordpress.wp_users;"
-# expect: halil_root and visitor
+# expect: malbayra and visitor
 ```
 
 If any container is in a restart loop, `docker logs <name>` is the
