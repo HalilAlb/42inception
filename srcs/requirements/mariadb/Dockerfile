@@ -1,9 +1,5 @@
 FROM debian:bookworm-slim
 
-LABEL org.opencontainers.image.title="inception-mariadb" \
-      org.opencontainers.image.source="https://github.com/HalilAlb/42inception" \
-      org.opencontainers.image.description="MariaDB 10.11 on Debian 12 for the 42 Inception project"
-
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \

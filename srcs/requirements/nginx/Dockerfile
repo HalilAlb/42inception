@@ -1,9 +1,5 @@
 FROM debian:bookworm-slim
 
-LABEL org.opencontainers.image.title="inception-nginx" \
-      org.opencontainers.image.source="https://github.com/HalilAlb/42inception" \
-      org.opencontainers.image.description="nginx 1.22 + openssl on Debian 12"
-
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \

@@ -1,9 +1,5 @@
 FROM debian:bookworm-slim
 
-LABEL org.opencontainers.image.title="inception-wordpress" \
-      org.opencontainers.image.source="https://github.com/HalilAlb/42inception" \
-      org.opencontainers.image.description="WordPress + php-fpm 8.2 on Debian 12"
-
 ENV WP_VERSION=6.7.2 \
     WP_CLI_VERSION=2.11.0 \
     WP_PATH=/var/www/html

@@ -15,12 +15,9 @@ read_secret() {
 
 MARKER="$DATADIR/.inception_initialised"
 
-# The host bind-mount (/home/<login>/data/mariadb) is root-owned and hides the
-# chown done at build time, so fix ownership on every start.
 mkdir -p /var/run/mysqld "$DATADIR"
 chown -R mysql:mysql /var/run/mysqld "$DATADIR"
 
-# Datadir initialised by an older version of this script (no marker yet).
 if [[ ! -f "$MARKER" && -n "${MYSQL_DATABASE:-}" && -d "$DATADIR/$MYSQL_DATABASE" ]]; then
     touch "$MARKER"
 fi
@@ -28,8 +25,6 @@ fi
 if [[ ! -f "$MARKER" ]]; then
     echo "[mariadb] datadir not initialised, bootstrapping…"
 
-    # Leftovers from a previously failed bootstrap would make us skip init
-    # forever, so start from a clean datadir.
     find "$DATADIR" -mindepth 1 -delete
 
     MYSQL_ROOT_PASSWORD=$(read_secret db_root_password)
